@@ -1,0 +1,9 @@
+Package: com.kdt.aintuitweak
+Name: aintuitweaks
+Version: 0.0.1
+Architecture: iphoneos-arm
+Description: An awesome MobileSubstrate tweak!
+Maintainer: khanhduytran0
+Author: khanhduytran0
+Section: Tweaks
+Depends: mobilesubstrate (>= 0.9.5000)
