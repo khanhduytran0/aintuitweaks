@@ -1,3 +1,3 @@
 #!/bin/sh
-# managedappdistributiond does not honor SIGTERM
-killall -KILL managedappdistributiond || true
+# some daemons do not honor SIGTERM
+killall -KILL appstorecomponentsd installd managedappdistributiond || true

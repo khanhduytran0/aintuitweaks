@@ -2,6 +2,7 @@
 	Filter = {
 		Executables = (
 			appstorecomponentsd,
+			installd,
 			"managedappdistributiond",
 			MobileStorageMounter,
 		);

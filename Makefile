@@ -1,5 +1,5 @@
 TARGET := iphone:clang:latest:15.0
-INSTALL_TARGET_PROCESSES = appstorecomponentsd managedappdistributiond MobileStorageMounter
+INSTALL_TARGET_PROCESSES = appstorecomponentsd installd managedappdistributiond MobileStorageMounter
 THEOS_PACKAGE_SCHEME := rootless
 
 include $(THEOS)/makefiles/common.mk
