@@ -1,12 +1,12 @@
 TARGET := iphone:clang:latest:15.0
-INSTALL_TARGET_PROCESSES = appstorecomponentsd installd managedappdistributiond MobileStorageMounter
+INSTALL_TARGET_PROCESSES = appstorecomponentsd installd managedappdistributiond SpringBoard MobileStorageMounter
 THEOS_PACKAGE_SCHEME := rootless
 
 include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = aintuitweaks
 
-aintuitweaks_FILES = BypassMarketplace.x FixDDI.x
+aintuitweaks_FILES = BypassMarketplace.x BypassMirroringUnlock.x FixDDI.x
 aintuitweaks_CFLAGS = -fobjc-arc
 aintuitweaks_FRAMEWORKS = IOKit
 aintuitweaks_LIBRARIES = image4

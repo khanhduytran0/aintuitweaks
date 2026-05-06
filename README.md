@@ -11,3 +11,6 @@ Stock apps are provided via an internal server which is inaccessible outside of 
 
 ## Bypassing EU/Japan Marketplace checks
 The old method of using [eligibility plist](https://github.com/Lrdsnow/EUEnabler) no longer works. This tweak bypasses the checks to allow accessing EU Marketplace apps on "AI" devices.
+
+## Bypassing iPhone Mirroring disconnect on unlock
+iPhone Mirroring requires the device to remain locked, which disallows using both iPhone Mirroring and device display simultaneously. This tweak bypasses the check to allow using iPhone Mirroring while the device is unlocked, so you can have 2 apps running side by side, one on the device and one on iPhone Mirroring.
