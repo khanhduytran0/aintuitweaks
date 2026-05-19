@@ -1,5 +1,8 @@
 {
 	Filter = {
+		Bundles = (
+			"com.apple.UIKit",
+		);
 		Executables = (
 			SpringBoard,
 			appstorecomponentsd,

@@ -3,6 +3,30 @@
 #import <IOKit/IOKitLib.h>
 #import "SignedPDI.h"
 
+typedef struct _img4_chip_instance {
+    img4_struct_version_t chid_version;
+    const img4_chip_t *chid_chip_family;
+    img4_chip_instance_omit_t chid_omit;
+    uint32_t chid_cepo;
+    uint32_t chid_bord;
+    uint32_t chid_chip;
+    uint32_t chid_sdom;
+    uint64_t chid_ecid;
+    bool chid_cpro;
+    bool chid_csec;
+    bool chid_epro;
+    bool chid_esec;
+    bool chid_iuou;
+    bool chid_rsch;
+    bool chid_euou;
+    uint32_t chid_esdm;
+    bool chid_fpgt;
+    img4_dgst_t chid_udid;
+    uint32_t chid_fchp;
+    uint32_t chid_type;
+    uint32_t chid_styp;
+    uint32_t chid_clas;
+} img4_chip_instance_t;
 struct _img4_nonce_domain {
     uint64_t cryptex1, index;
 };
@@ -66,6 +90,18 @@ BOOL gCalledImg4Execute = NO;
         return kIOReturnSuccess;
     }
     return ret;
+}
+
+// Fix boardID = 9
+%hookf(errno_t
+img4_chip_instantiate, const img4_chip_t *chip, img4_chip_instance_t *chip_instance) {
+    errno_t result = %orig;
+    if(!result && chip_instance->chip_bord == 9) {
+        chip_instance->chip_bord = 10;
+        chip_instance->chip_chip = 0x8101;
+        chip_instance->chip_ecid = 0;
+    }
+    return result;
 }
 %end
 
