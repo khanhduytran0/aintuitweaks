@@ -3,6 +3,15 @@
 #import <IOKit/IOKitLib.h>
 #import "SignedPDI.h"
 
+#define IMG4_DGST_MAX_LEN (48u)
+typedef uint16_t img4_struct_version_t;
+typedef struct _img4_chip img4_chip_t;
+typedef uint64_t img4_chip_instance_omit_t;
+typedef struct _img4_dgst {
+    img4_struct_version_t i4d_version;
+    size_t i4d_len;
+    uint8_t i4d_bytes[IMG4_DGST_MAX_LEN];
+} img4_dgst_t;
 typedef struct _img4_chip_instance {
     img4_struct_version_t chid_version;
     const img4_chip_t *chid_chip_family;
@@ -45,6 +54,7 @@ typedef struct _img4_nonce {
 } img4_nonce_t;
 
 const char *container_system_group_path_for_identifier(int, const char *group, void *error);
+errno_t img4_chip_instantiate(const img4_chip_t *chip, img4_chip_instance_t *chip_instance);
 errno_t img4_nonce_domain_copy_nonce(const img4_nonce_domain_t *nd, img4_nonce_t *n);
 int img4_firmware_execute(void* fw, const void *chip, const void *nonce);
 
@@ -93,13 +103,12 @@ BOOL gCalledImg4Execute = NO;
 }
 
 // Fix boardID = 9
-%hookf(errno_t
-img4_chip_instantiate, const img4_chip_t *chip, img4_chip_instance_t *chip_instance) {
+%hookf(errno_t, img4_chip_instantiate, const img4_chip_t *chip, img4_chip_instance_t *chip_instance) {
     errno_t result = %orig;
-    if(!result && chip_instance->chip_bord == 9) {
-        chip_instance->chip_bord = 10;
-        chip_instance->chip_chip = 0x8101;
-        chip_instance->chip_ecid = 0;
+    if(!result && chip_instance->chid_bord == 9) {
+        chip_instance->chid_bord = 10;
+        chip_instance->chid_chip = 0x8101;
+        chip_instance->chid_ecid = 0;
     }
     return result;
 }

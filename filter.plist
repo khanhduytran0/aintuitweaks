@@ -4,6 +4,8 @@
 			"com.apple.UIKit",
 		);
 		Executables = (
+			SwitchBoard,
+			"hidd.nonui",
 			SpringBoard,
 			appstorecomponentsd,
 			installd,

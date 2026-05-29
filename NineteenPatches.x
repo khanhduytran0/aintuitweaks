@@ -6,6 +6,6 @@
     uint32_t xpacd_x0 = 0xdac147e0;
     uint32_t ret = 0xd65f03c0;
     if (symbol && symbol[-1] == ret && symbol[0] == ret) {
-        MSHookMemory(symbol-4, &xpacd_x0, sizeof(uint32_t));
+        MSHookMemory(symbol-1, &xpacd_x0, sizeof(uint32_t));
     }
 }

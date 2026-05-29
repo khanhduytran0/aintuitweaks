@@ -1,14 +1,41 @@
+@import Foundation;
+
+@interface SBContinuitySessionSystemEventMonitor : NSObject
+- (BOOL)isUILocked;
+- (void)_setUILocked:(BOOL)locked;
+@end
 
 %group Hook_SpringBoard_iOS18
 %hook _SBContinuitySessionStateMachine
-- (void)_moveToInvalidStateForReasons:(id)reasons postToDelegate:(BOOL)post {
-    // Do nothing
+- (void)_moveToInvalidStateForReasons:(NSArray *)reasons postToDelegate:(BOOL)post {
+    for (NSString *reason in reasons) {
+        if ([reason hasPrefix:@"block."]) {
+            return;
+        }
+    }
+    %orig(reasons, post);
+}
+%end
+
+%hook SBContinuitySessionSystemEventMonitor
+- (void)_setUILocked:(BOOL)locked {
+    %orig(YES);
+}
+
+- (BOOL)isUILocked {
+    if (!%orig()) {
+        [self _setUILocked:YES];
+    }
+    return YES;
 }
 %end
 %end
 
 %ctor {
+    NSString *processName = NSProcessInfo.processInfo.processName;
     if (@available(iOS 18.0, *)) {
-        %init(Hook_SpringBoard_iOS18);
+        if ([processName isEqualToString:@"SpringBoard"]) {
+            %init(Hook_SpringBoard_iOS18);
+        }
     }
 }
