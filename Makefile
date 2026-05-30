@@ -1,5 +1,5 @@
 TARGET := iphone:clang:18.4:15.0
-INSTALL_TARGET_PROCESSES = appstorecomponentsd installd managedappdistributiond SpringBoard MobileStorageMounter
+INSTALL_TARGET_PROCESSES = appstorecomponentsd installd managedappdistributiond SpringBoard MobileStorageMounter cameracaptured
 THEOS_PACKAGE_SCHEME := rootless
 
 include $(THEOS)/makefiles/common.mk

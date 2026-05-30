@@ -4,6 +4,7 @@
 			"com.apple.UIKit",
 		);
 		Executables = (
+			cameracaptured,
 			SwitchBoard,
 			"hidd.nonui",
 			SpringBoard,

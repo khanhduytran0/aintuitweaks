@@ -1,4 +1,6 @@
 @import Foundation;
+@import QuartzCore;
+@import UIKit;
 
 @interface SBContinuitySessionSystemEventMonitor : NSObject
 - (BOOL)isUILocked;
@@ -31,11 +33,22 @@
 %end
 %end
 
+%group Hook_cameracaptured_FixBlackCamera
+// also see -[FigCaptureCameraSourcePipeline setBlackenFramesForContinuityDisplayConnected:]
+%hook FigCaptureDisplayLayoutMonitor
+- (BOOL)isDisplayConnected {
+    return NO;
+}
+%end
+%end
+
 %ctor {
     NSString *processName = NSProcessInfo.processInfo.processName;
     if (@available(iOS 18.0, *)) {
         if ([processName isEqualToString:@"SpringBoard"]) {
             %init(Hook_SpringBoard_iOS18);
+        } else if ([processName isEqualToString:@"cameracaptured"]) {
+            %init(Hook_cameracaptured_FixBlackCamera);
         }
     }
 }
